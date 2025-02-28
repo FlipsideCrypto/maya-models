@@ -1,0 +1,16 @@
+version: 2
+models:
+  - name: silver__active_vault_events
+    data_tests:
+      - dbt_utils.unique_combination_of_columns:
+          combination_of_columns:
+            - EVENT_ID
+            - BLOCK_TIMESTAMP
+            - ADD_ASGARD_ADDR
+    columns:
+      - name: BLOCK_TIMESTAMP
+        data_tests:
+          - not_null
+      - name: ADD_ASGARD_ADDR
+        data_tests:
+          - not_null

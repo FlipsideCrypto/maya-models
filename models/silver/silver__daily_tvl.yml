@@ -1,0 +1,32 @@
+version: 2
+models:
+  - name: silver__daily_tvl
+    data_tests:
+      - dbt_utils.unique_combination_of_columns:
+          combination_of_columns:
+            - DAY
+    columns:
+      - name: DAY
+        data_tests:
+          - not_null
+          - dbt_expectations.expect_row_values_to_have_recent_data:
+              datepart: day
+              interval: 2
+      - name: TOTAL_VALUE_POOLED
+        data_tests:
+          - not_null
+      - name: TOTAL_VALUE_POOLED_USD
+        data_tests:
+          - not_null
+      - name: TOTAL_VALUE_BONDED
+        data_tests:
+          - not_null
+      - name: TOTAL_VALUE_BONDED_USD
+        data_tests:
+          - not_null
+      - name: TOTAL_VALUE_LOCKED
+        data_tests:
+          - not_null
+      - name: TOTAL_VALUE_LOCKED_USD
+        data_tests:
+          - not_null

@@ -1,0 +1,19 @@
+version: 2
+models:
+  - name: silver__transfer_events
+    columns:
+      - name: BLOCK_TIMESTAMP
+        data_tests:
+          - not_null
+      - name: ASSET
+        data_tests:
+          - not_null
+      - name: AMOUNT_E8
+        data_tests:
+          - not_null
+      - name: FROM_ADDRESS
+        data_tests:
+          - not_null
+      - name: TO_ADDRESS
+        data_tests:
+          - not_null

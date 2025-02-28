@@ -1,0 +1,80 @@
+version: 2
+models:
+  - name: silver__swaps
+    data_tests:
+      - dbt_utils.unique_combination_of_columns:
+          combination_of_columns:
+            - BLOCK_ID
+            - TX_ID
+            - POOL_NAME
+            - FROM_ADDRESS
+            - TO_POOL_ADDRESS
+            - FROM_ASSET
+            - TO_ASSET
+            - NATIVE_TO_ADDRESS
+            - FROM_AMOUNT
+            - TO_AMOUNT
+    columns:
+      - name: BLOCK_ID
+        data_tests:
+          - not_null
+      - name: BLOCK_TIMESTAMP::DATE
+        data_tests:
+          - not_null
+          - dbt_expectations.expect_row_values_to_have_recent_data:
+              datepart: day
+              interval: 2
+      - name: TX_ID
+        data_tests:
+          - not_null
+      - name: BLOCKCHAIN
+        data_tests:
+          - not_null
+      - name: POOL_NAME
+        data_tests:
+          - not_null
+      - name: FROM_ADDRESS
+        data_tests:
+          - not_null
+      - name: TO_POOL_ADDRESS
+        data_tests:
+          - not_null
+      - name: FROM_ASSET
+        data_tests:
+          - not_null
+      - name: TO_ASSET
+        data_tests:
+          - not_null
+      - name: FROM_AMOUNT
+        data_tests:
+          - not_null
+      - name: TO_AMOUNT
+        data_tests:
+          - not_null
+      - name: MIN_TO_AMOUNT
+        data_tests:
+          - not_null
+      - name: FROM_AMOUNT_USD
+        data_tests:
+          - not_null
+      - name: TO_AMOUNT_USD
+        data_tests:
+          - not_null
+      - name: TO_AMOUNT_MIN_USD
+        data_tests:
+          - not_null
+      - name: SWAP_SLIP_BP
+        data_tests:
+          - not_null
+      - name: LIQ_FEE_cacao
+        data_tests:
+          - not_null
+      - name: LIQ_FEE_cacao_USD
+        data_tests:
+          - not_null
+      - name: LIQ_FEE_ASSET
+        data_tests:
+          - not_null
+      - name: LIQ_FEE_ASSET_USD
+        data_tests:
+          - not_null

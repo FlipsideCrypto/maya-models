@@ -1,0 +1,49 @@
+version: 2
+models:
+  - name: silver__streamling_swap_details_events
+    data_tests:
+      - dbt_utils.unique_combination_of_columns:
+          combination_of_columns:
+            - EVENT_ID
+    columns:
+      - name: TX_ID
+        data_tests:
+          - not_null
+      - name: INTERVAL
+        data_tests:
+        - not_null
+      - name: quantity
+        data_tests:
+        - not_null
+      - name:  COUNT
+        data_tests:
+        - not_null
+      - name: last_height
+        data_tests:
+        - not_null
+      - name: deposit_asset
+        data_tests:
+        - not_null
+      - name: deposit_e8
+        data_tests:
+        - not_null
+      - name: in_asset
+        data_tests:
+        - not_null
+      - name: in_e8
+        data_tests:
+        - not_null
+      - name: out_asset
+        data_tests:
+        - not_null
+      - name: out_e8
+        data_tests:
+        - not_null
+      - name: failed_swaps
+      - name: failed_swaps_reasons
+      - name: event_id
+        data_tests:
+        - not_null
+      - name: block_timestamp
+        data_tests:
+        - not_null

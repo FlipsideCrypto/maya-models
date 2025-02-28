@@ -1,0 +1,19 @@
+version: 2
+models:
+  - name: silver__rewards_event_entries
+    data_tests:
+      - dbt_utils.unique_combination_of_columns:
+          combination_of_columns:
+            - BLOCK_TIMESTAMP
+            - POOL_NAME
+            - EVENT_ID
+    columns:
+      - name: BLOCK_TIMESTAMP
+        data_tests:
+          - not_null
+      - name: CACAO_E8
+        data_tests:
+          - not_null
+      - name: POOL_NAME
+        data_tests:
+          - not_null

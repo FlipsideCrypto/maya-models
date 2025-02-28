@@ -1,0 +1,45 @@
+version: 2
+models:
+  - name: silver__daily_earnings
+    data_tests:
+      - dbt_utils.unique_combination_of_columns:
+          combination_of_columns:
+            - DAY
+    columns:
+      - name: DAY
+        data_tests:
+          - not_null
+          - dbt_expectations.expect_row_values_to_have_recent_data:
+              datepart: day
+              interval: 2
+      - name: LIQUIDITY_FEES
+        data_tests:
+          - not_null
+      - name: LIQUIDITY_FEES_USD
+        data_tests:
+          - not_null
+      - name: BLOCK_REWARDS
+        data_tests:
+          - not_null
+      - name: BLOCK_REWARDS_USD
+        data_tests:
+          - not_null
+      - name: TOTAL_EARNINGS
+        data_tests:
+          - not_null
+      - name: TOTAL_EARNINGS_USD
+        data_tests:
+          - not_null
+      - name: EARNINGS_TO_NODES
+        data_tests:
+          - not_null
+      - name: EARNINGS_TO_NODES_USD
+        data_tests:
+          - not_null
+      - name: EARNINGS_TO_POOLS
+        data_tests:
+          - not_null
+      - name: EARNINGS_TO_POOLS_USD
+        data_tests:
+          - not_null
+      - name: AVG_NODE_COUNT

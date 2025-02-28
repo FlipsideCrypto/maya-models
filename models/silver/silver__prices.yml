@@ -1,0 +1,33 @@
+version: 2
+models:
+  - name: silver__prices
+    data_tests:
+      - dbt_utils.unique_combination_of_columns:
+          combination_of_columns:
+            - BLOCK_ID
+            - POOL_NAME
+    columns:
+      - name: BLOCK_ID
+        data_tests:
+          - not_null
+      - name: BLOCK_TIMESTAMP
+        data_tests:
+          - not_null
+          - dbt_expectations.expect_row_values_to_have_recent_data:
+              datepart: day
+              interval: 1
+      - name: PRICE_cacao_ASSET
+        data_tests:
+          - not_null
+      - name: PRICE_ASSET_cacao
+        data_tests:
+          - not_null
+      - name: ASSET_USD
+        data_tests:
+          - not_null
+      - name: cacao_USD
+        data_tests:
+          - not_null
+      - name: POOL_NAME
+        data_tests:
+          - not_null
