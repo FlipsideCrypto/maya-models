@@ -1,0 +1,49 @@
+version: 2
+models:
+  - name: defi__fact_reserve_events
+    description: "Fact table that shows the amount of cacao reserved into the network"
+    columns:
+      - name: FACT_RESERVE_EVENTS_ID
+        description: "{{ doc('sk') }}"
+        tests:
+          - dbt_expectations.expect_column_to_exist
+          - unique
+      - name: BLOCK_TIMESTAMP
+        description: "{{ doc('block_timestamp') }}"
+        tests:
+          - not_null:
+              where: DIM_BLOCK_ID not in ('-1','-2')
+      - name: DIM_BLOCK_ID
+        description: "FK to DIM_BLOCK table"
+        tests:
+          - negative_one:
+              where: _inserted_timestamp <  (CURRENT_TIMESTAMP - INTERVAL '8 HOURS')
+      - name: TX_ID
+        description: "{{ doc('tx_id') }}"
+      - name: BLOCKCHAIN
+        description: "{{ doc('blockchain') }}"
+      - name: FROM_ADDRESS
+        description: "{{ doc('from_address') }}"
+      - name: TO_ADDRESS
+        description: "{{ doc('to_address') }}"
+      - name: ASSET
+        description: "{{ doc('asset') }}"
+      - name: ASSET_E8
+        description: "The asset amount"
+      - name: MEMO
+        description: "{{ doc('memo') }}"
+      - name: ADDRESS
+        description: "The address reserve the amount to the pool"
+      - name: E8
+        description: "The cacao amount"
+      - name: INSERTED_TIMESTAMP
+        description: '{{ doc("inserted_timestamp") }}'   
+      - name: MODIFIED_TIMESTAMP
+        description: '{{ doc("modified_timestamp") }}'  
+    tests:
+      - dbt_constraints.primary_key:
+          column_name: FACT_RESERVE_EVENTS_ID
+      - dbt_constraints.foreign_key:
+          fk_column_name: DIM_BLOCK_ID
+          pk_table_name: ref('core__dim_block')
+          pk_column_name: DIM_BLOCK_ID

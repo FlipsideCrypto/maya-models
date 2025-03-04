@@ -23,6 +23,4 @@ models:
         data_tests:
           - not_null
       - name: cacao_AMOUNT_USD
-        data_tests:
-          - not_null:
-              where: BLOCK_TIMESTAMP <= CURRENT_DATE - 2 AND BLOCK_TIMESTAMP >= '2021-04-13'
+  

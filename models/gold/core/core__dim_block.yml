@@ -1,0 +1,68 @@
+version: 2
+models:
+  - name: core__dim_block
+    description: "Records of all blocks that have occurred on Thorchain, dating back to the genesis block. "
+    columns:
+      - name: DIM_BLOCK_ID
+        description: "{{ doc('sk') }}"
+        tests:
+          - dbt_expectations.expect_column_to_exist
+      - name: BLOCK_ID
+        description: "{{ doc('block_id') }}"
+        tests:
+          - not_null:
+              where: DIM_BLOCK_ID not in ('-1','-2')
+      - name: BLOCK_TIMESTAMP
+        description: "{{ doc('block_timestamp') }}"
+        tests:
+          - not_null:
+              where: DIM_BLOCK_ID not in ('-1','-2')
+          - dbt_expectations.expect_row_values_to_have_recent_data:
+              datepart: day
+              interval: 1
+      - name: BLOCK_DATE
+        description: "{{ doc('block_date') }}"
+        tests:
+          - not_null:
+              where: DIM_BLOCK_ID not in ('-1','-2')
+      - name: BLOCK_HOUR
+        description: "{{ doc('block_date') }}"
+        tests:
+          - not_null:
+              where: DIM_BLOCK_ID not in ('-1','-2')
+      - name: BLOCK_WEEK
+        description: "{{ doc('block_date') }}"
+        tests:
+          - not_null:
+              where: DIM_BLOCK_ID not in ('-1','-2')
+      - name: BLOCK_MONTH
+        description: "The numeric month of block minting(without a timezone)"
+      - name: BLOCK_QUARTER
+        description: "The numeric quarter of block minting(without a timezone)"
+      - name: BLOCK_YEAR
+        description: "The numeric year of block minting(without a timezone)"
+      - name: BLOCK_DAYOFMONTH
+        description: "The numeric day of month of block minting(without a timezone)"
+      - name: BLOCK_DAYOFWEEK
+        description: "The numeric day of week of block minting(without a timezone)"
+      - name: BLOCK_DAYOFYEAR
+        description: "The numeric day of year of block minting(without a timezone)"
+      - name: TIMESTAMP
+        description: "integer value of the block_teimstamp"
+        tests:
+          - not_null:
+              where: DIM_BLOCK_ID not in ('-1','-2')
+      - name: HASH
+        description:  "block hash"
+        tests:
+          - not_null:
+              where: DIM_BLOCK_ID not in ('-1','-2')
+      - name: agg_state
+        description:  ""
+      - name: INSERTED_TIMESTAMP
+        description: '{{ doc("inserted_timestamp") }}'   
+      - name: MODIFIED_TIMESTAMP
+        description: '{{ doc("modified_timestamp") }}'  
+    tests:
+      - dbt_constraints.primary_key:
+          column_name: DIM_BLOCK_ID

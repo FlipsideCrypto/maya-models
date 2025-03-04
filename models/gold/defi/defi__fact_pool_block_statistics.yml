@@ -1,0 +1,90 @@
+version: 2
+models:
+  - name: defi__fact_pool_block_statistics
+    description: "Fact table containing the actions the liquidity providers do in the THORChain, with the amount in cacao/Asset"
+    columns:
+      - name: FACT_POOL_BLOCK_STATISTICS_ID
+        description: "{{ doc('sk') }}"
+        tests:
+          - dbt_expectations.expect_column_to_exist
+          - unique
+      - name: DAY
+        description: "The timestamp in day for the recorded of the block fee"
+      - name: ADD_ASSET_LIQUIDITY_VOLUME
+        description: "How much asset liquidity has been added to the pool at this time for this pool"
+      - name: ADD_LIQUIDITY_COUNT
+        description: "The count of add liquidity transactions"
+      - name: ADD_LIQUIDITY_VOLUME
+        description: "The asset volume of liquidity added to the pool"
+      - name: ASSET
+        description: "{{ doc('asset') }}"
+      - name: ASSET_DEPTH
+        description: "The current pool depth, which is the total cacao pooled in the asset"
+      - name: ASSET_PRICE
+        description: "The asset price in cacao for this day"
+      - name: ASSET_PRICE_USD
+        description: "The asset price in USD"
+      - name: AVERAGE_SLIP
+        description: "The average slip point for this block within the day"
+      - name: IMPERMANENT_LOSS_PROTECTION_PAID
+        description: "The total impermanent loss protection paid for this pool on this day"
+      - name: cacao_DEPTH
+        description: "The pool depth"
+      - name: STATUS
+        description: "The pool status, which is active or not"
+      - name: SWAP_COUNT
+        description: "Total swap transactions count"
+      - name: SWAP_VOLUME
+        description: "Total swap volume"
+      - name: TO_ASSET_AVERAGE_SLIP
+        description: "If the transaction is from cacao to Asset, the average slip point"
+      - name: TO_ASSET_COUNT
+        description: "How many swaps happen from cacao to Asset"
+      - name: TO_ASSET_FEES
+        description: "The total swap fees paid to transfer from cacao to Asset"
+      - name: TO_ASSET_VOLUME
+        description: "The total volume transferred from cacao to Asset"
+      - name: TO_cacao_AVERAGE_SLIP
+        description: "If the transaction is from Asset to cacao, the average slip point"
+      - name: TO_cacao_COUNT
+        description: "How many swaps happen from Asset to cacao"
+      - name: TO_cacao_FEES
+        description: "The total swap fees paid to transfer from Asset to cacao"
+      - name: TO_cacao_VOLUME
+        description: "The total volume transferred from Asset to cacao"
+      - name: TOTALFEES
+        description: "The total fees paid for the swaps"
+      - name: UNIQUE_MEMBER_COUNT
+        description: "All memberships with a cacao address. Take the member from cacao and asset and then subtract the balance = 0 then get the results"
+      - name: UNIQUE_SWAPPER_COUNT
+        description: "The unique swap addresses for this pool "
+      - name: UNITS
+        description: "The swap units"
+      - name: WITHDRAW_ASSET_VOLUME
+        description: "How many assets get withdrawn from the liquidity pools"      
+      - name: WITHDRAW_COUNT
+        description: "How many times the withdraw events happens"
+      - name: WITHDRAW_cacao_VOLUME
+        description: "How many cacao volume get withdrawn from the pool"
+      - name: WITHDRAW_VOLUME
+        description: "How many asset volume get withdrawn from the pool"
+      - name: TOTAL_STAKE
+        description: ""
+      - name: DEPTH_PRODUCT
+        description: ""
+      - name: SYNTH_UNITS
+        description: ""
+      - name: POOL_UNITS
+        description: ""
+      - name: LIQUIDITY_UNIT_VALUE_INDEX
+        description: ""
+      - name: PREV_LIQUIDITY_UNIT_VALUE_INDEX
+        description: ""    
+      - name: INSERTED_TIMESTAMP
+        description: '{{ doc("inserted_timestamp") }}'   
+      - name: MODIFIED_TIMESTAMP
+        description: '{{ doc("modified_timestamp") }}'  
+    tests:
+      - dbt_constraints.primary_key:
+          column_name: FACT_POOL_BLOCK_STATISTICS_ID
+     

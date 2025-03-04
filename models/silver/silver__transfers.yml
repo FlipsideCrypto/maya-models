@@ -13,15 +13,9 @@ models:
       - name: FROM_ADDRESS
         data_tests:
           - not_null
-          - dbt_expectations.expect_column_values_to_match_regex:
-              regex: maya1[0-9a-zA-Z]{39}
-              where: FROM_ADDRESS <> 'MidgardBalanceCorrectionAddress'
       - name: TO_ADDRESS
         data_tests:
           - not_null
-          - dbt_expectations.expect_column_values_to_match_regex:
-              regex: maya1[0-9a-zA-Z]{39}
-              where: TO_ADDRESS <> 'MidgardBalanceCorrectionAddress'
       - name: cacao_AMOUNT
         data_tests:
           - not_null

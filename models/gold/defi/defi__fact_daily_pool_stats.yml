@@ -1,0 +1,97 @@
+version: 2
+models:
+  - name: defi__fact_daily_pool_stats
+    description: "Fact table that shows the total valued locked and the total value bonded/pooled"
+    columns:
+      - name: FACT_DAILY_POOL_STATS_ID
+        description: "{{ doc('sk') }}"
+        tests:
+          - dbt_expectations.expect_column_to_exist
+          - unique
+      - name: DAY
+        description: "{{ doc('tx_id') }}"
+        tests:
+          - not_null
+      - name: POOL_NAME
+        description: "{{ doc('pool_name') }}"
+      - name: SYSTEM_REWARDS
+        description: "The total daily system rewards in cacao to the pool"
+      - name: SYSTEM_REWARDS_USD
+        description: "The total daily system rewards in USD to the pool"
+      - name: ASSET_LIQUIDITY
+        description: "The total asset liquidity for this pool"
+      - name: ASSET_PRICE
+        description: "Current asset price"
+      - name: ASSET_PRICE_USD
+        description: "Current asset price in USD"
+      - name: cacao_LIQUIDITY
+        description: "The total cacao liquidity for this pool"
+      - name: cacao_PRICE
+        description: "Current cacao price"
+      - name: cacao_PRICE_USD
+        description: "Current cacao price in USD"
+      - name: ADD_LIQUIDITY_COUNT
+        description: "How many times to add liquidity to the pool"
+      - name: ADD_ASSET_LIQUIDITY
+        description: "The total amount of asset liquidity added to the pool"
+      - name: ADD_ASSET_LIQUIDITY_USD
+        description: "The total amount in usd of asset liquidity added to the pool"
+      - name: ADD_cacao_LIQUIDITY
+        description: "The total amount of cacao liquidity added to the pool"
+      - name: ADD_cacao_LIQUIDITY_USD
+        description: "The total amount in usd of cacao liquidity added to the pool"
+      - name: WITHDRAW_COUNT
+        description: "Time to withdraw from the pool"
+      - name: WITHDRAW_ASSET_LIQUIDITY
+        description: "The total amount of asset withdrawn from the pool"
+      - name: WITHDRAW_ASSET_LIQUIDITY_USD
+        description: "The total amount in USD of asset withdrawn from the pool"
+      - name: WITHDRAW_cacao_LIQUIDITY
+        description: "The total amount of cacao withdrawn from the pool"
+      - name: WITHDRAW_cacao_LIQUIDITY_USD
+        description: "The total amount in USD of cacao withdrawn from the pool"
+      - name: IL_PROTECTION_PAID
+        description: "Impermanent loss protection cost paid to the network"
+      - name: IL_PROTECTION_PAID_USD
+        description: "Impermanent loss protection cost in USD paid to the network"
+      - name: AVERAGE_SLIP
+        description: "Average slippage "
+      - name: TO_ASSET_AVERAGE_SLIP
+        description: "When swap from cacao to Asset, the average slippage"
+      - name: TO_cacao_AVERAGE_SLIP
+        description: "When swap from Asset to cacao, the average slippage"
+      - name: SWAP_COUNT
+        description: "Total number of swaps"
+      - name: TO_ASSET_SWAP_COUNT
+        description: "Total number of swaps from cacao TO Asset"
+      - name: TO_cacao_SWAP_COUNT
+        description: "Total number of swaps from Asset TO cacao"
+      - name: SWAP_VOLUME_cacao
+        description: "The swap amount of cacao"
+      - name: SWAP_VOLUME_cacao_USD
+        description: "The swap amount of cacao in USD"
+      - name: TO_ASSET_SWAP_VOLUME
+        description: "The swap volume from cacao to Asset"
+      - name: TO_cacao_SWAP_VOLUME
+        description: "The swap volume from Asset to cacao"
+      - name: TOTAL_SWAP_FEES_cacao
+        description: "Total swap fees in cacao"
+      - name: TOTAL_SWAP_FEES_USD
+        description: "Total swap fees in USD"
+      - name: TOTAL_ASSET_SWAP_FEES
+        description: "Total asset swap fees in asset"
+      - name: TOTAL_ASSET_cacao_FEES
+        description: "Total asset swap fees in cacao"
+      - name: UNIQUE_MEMBER_COUNT
+        description: "All memberships with a cacao address. Take the member from cacao and asset and then subtract the balance = 0 then get the results"
+      - name: UNIQUE_SWAPPER_COUNT
+        description: "The unique swap address for this pool"
+      - name: LIQUIDITY_UNITS
+        description: "The amount of units for the liquidity in the pool"
+      - name: INSERTED_TIMESTAMP
+        description: '{{ doc("inserted_timestamp") }}'   
+      - name: MODIFIED_TIMESTAMP
+        description: '{{ doc("modified_timestamp") }}'  
+    tests:
+      - dbt_constraints.primary_key:
+          column_name: FACT_DAILY_POOL_STATS_ID

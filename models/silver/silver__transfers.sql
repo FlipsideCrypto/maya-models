@@ -24,13 +24,10 @@ SELECT
   COALESCE(amount_e8 / pow(10, 8), 0) AS cacao_amount,
   COALESCE(amount_e8 / pow(10, 8) * cacao_usd, 0) AS cacao_amount_usd,
   event_id,
-  concat_ws(
-    b.height :: STRING,
-    from_address :: STRING,
-    to_address :: STRING,
-    asset :: STRING,
-    event_id :: STRING
-  ) _unique_key,
+  {{ dbt_utils.generate_surrogate_key(
+    ['se.event_id', 'se.from_address', 'se.to_address', 'se.asset', 'se.amount_e8']
+  ) }}
+  _unique_key,
   se._inserted_timestamp
 FROM
   {{ ref('silver__transfer_events') }}

@@ -1,0 +1,79 @@
+version: 2
+models:
+  - name: defi__fact_liquidity_actions
+    description: "Fact table containing the actions the liquidity providers do in the THORChain, with the amount in cacao/Asset"
+    columns:
+      - name: FACT_LIQUIDITY_ACTIONS_ID
+        description: "{{ doc('sk') }}"
+        tests:
+          - dbt_expectations.expect_column_to_exist
+          - unique
+      - name: BLOCK_TIMESTAMP
+        description: "{{ doc('block_timestamp') }}"
+        tests:
+          - not_null:
+              where: DIM_BLOCK_ID not in ('-1','-2')
+      - name: DIM_BLOCK_ID
+        description: "FK to DIM_BLOCK table"
+        tests:
+          - negative_one:
+              where: _inserted_timestamp <  (CURRENT_TIMESTAMP - INTERVAL '8 HOURS')
+      - name: TX_ID
+        description: "{{ doc('tx_id') }}"
+      - name: LP_ACTION
+        description: "The direction of the liquidity providers, add or remove the liquidity"
+        tests:
+          - not_null 
+      - name: POOL_NAME
+        description: "{{ doc('pool_name') }}"
+        tests:
+          - not_null 
+      - name: FROM_ADDRESS
+        description: "{{ doc('address') }}"
+      - name: TO_ADDRESS
+        description: "{{ doc('address') }}"
+
+      - name: cacao_AMOUNT
+        description: "How many cacao liquidity added/removed"
+        tests:
+          - not_null
+      - name: cacao_AMOUNT_USD
+        description: "How many cacao liquidity added/removed in USD"
+        tests:
+          - not_null
+      - name: ASSET_AMOUNT
+        description: "How many Asset liquidity added/removed"
+        tests:
+          - not_null
+      - name: ASSET_AMOUNT_USD
+        description: "How many Asset liquidity added/removed in USD"
+      - name: STAKE_UNITS
+        description: "Stake units are a way of representing how much liquidity an address has in the pool. THORChain converts the raw amounts you are depositing / withdrawing into stake_units to represent what % of the pool you own a claim to."
+        tests:
+          - not_null
+      - name: asset_tx_id
+        description: "The transaction id for adding/removing the asset"
+      - name: asset_address
+        description: "The asset address of the liquidity provider"
+      - name: asset_blockchain
+        description: "{{ doc('blockchain') }}"
+      - name: il_protection
+        description: "The total impermanent loss protection paid for this pool on this day"
+      - name: il_protection_usd
+        description: "The total impermanent loss protection paid  in USD for this pool on this day"
+      - name: unstake_asymmetry
+        description: "Only exists in unstake, or removing the liquidity"
+      - name: unstake_basis_points
+        description: "The basis points for unstaking, or removing the liquidity"
+      - name: INSERTED_TIMESTAMP
+        description: '{{ doc("inserted_timestamp") }}'   
+      - name: MODIFIED_TIMESTAMP
+        description: '{{ doc("modified_timestamp") }}'  
+    tests:
+      - dbt_constraints.primary_key:
+          column_name: FACT_LIQUIDITY_ACTIONS_ID
+      - dbt_constraints.foreign_key:
+          fk_column_name: DIM_BLOCK_ID
+          pk_table_name: ref('core__dim_block')
+          pk_column_name: DIM_BLOCK_ID
+

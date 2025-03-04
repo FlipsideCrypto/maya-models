@@ -1,0 +1,96 @@
+version: 2
+models:
+  - name: defi__fact_swaps_events
+    description: "Fact table that shows the swap event entries table shows the entries for the swaps"
+    columns:
+      - name: FACT_SWAP_EVENTS_ID
+        description: "{{ doc('sk') }}"
+        tests:
+          - dbt_expectations.expect_column_to_exist
+          - unique
+      - name: BLOCK_TIMESTAMP
+        description: "{{ doc('block_timestamp') }}"
+        tests:
+          - not_null:
+              where: DIM_BLOCK_ID not in ('-1','-2')
+      - name: DIM_BLOCK_ID
+        description: "FK to DIM_BLOCK table"
+        tests:
+          - negative_one:
+              where: _inserted_timestamp <  (CURRENT_TIMESTAMP - INTERVAL '8 HOURS')
+      - name: TX_ID
+        description: "{{ doc('tx_id') }}"
+        tests:
+          - not_null
+      - name: BLOCKCHAIN
+        description: "{{ doc('blockchain') }}"
+        tests:
+          - not_null
+      - name: FROM_ADDRESS
+        description: "The user address that initiates the swap"
+        tests:
+          - not_null
+      - name: TO_ADDRESS
+        description: "The address we are swapping to"
+        tests:
+          - not_null
+      - name: FROM_ASSET
+        description: "The asset we are swapping from"
+        tests:
+          - not_null
+      - name: FROM_E8
+        description: "The amount we are swapping from"
+        tests:
+          - not_null
+      - name: TO_ASSET
+        description: "The asset we are swapping to"
+        tests:
+          - not_null
+      - name: TO_E8
+        description: "The asset amount we are swapping for (divide by 10^8 to get the decimal amount)"
+        tests:
+          - not_null
+      - name: MEMO
+        description: "The transaction memo"
+        tests:
+          - not_null
+      - name: POOL_NAME
+        description: "The name of the pool"
+        tests:
+          - not_null
+      - name: TO_E8_MIN
+        description: "The minimum amount the swapper will receive"
+        tests:
+          - not_null
+      - name: SWAP_SLIP_BP
+        description: "The slippage"
+        tests:
+          - not_null
+      - name: LIQ_FEE_E8
+        description: "The fee (divide by 10^8 to get the decimal amount)"
+        tests:
+          - not_null
+      - name: LIQ_FEE_IN_cacao_E8
+        description: "The fee in cacao (divide by 10^8 to get the decimal amount)"
+        tests:
+          - not_null
+      - name: _DIRECTION
+        description: ""
+        tests:
+          - not_null
+      - name: STREAMING_COUNT
+        description: "The count of the streaming events"
+      - name: STREAMING_QUANTITY
+        description: "The quantity of the streaming events"   
+      - name: INSERTED_TIMESTAMP
+        description: '{{ doc("inserted_timestamp") }}'   
+      - name: MODIFIED_TIMESTAMP
+        description: '{{ doc("modified_timestamp") }}'  
+    tests:
+      - dbt_constraints.primary_key:
+          column_name: FACT_SWAP_EVENTS_ID
+      - dbt_constraints.foreign_key:
+          fk_column_name: DIM_BLOCK_ID
+          pk_table_name: ref('core__dim_block')
+          pk_column_name: DIM_BLOCK_ID
+
