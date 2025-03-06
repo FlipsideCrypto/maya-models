@@ -1,0 +1,66 @@
+version: 2
+models:
+  - name: defi__fact_daily_earnings
+    description: "The earnings information for the whole THORChain network broken down by daily"
+    columns:
+      - name: FACT_DAILY_EARNINGS_ID
+        description: "{{ doc('sk') }}"
+        tests:
+          - dbt_expectations.expect_column_to_exist
+          - unique
+      - name: DAY
+        description: "The recorded day"
+        tests:
+          - not_null   
+          - unique 
+      - name: LIQUIDITY_FEES
+        description: "The summarized liquidity cost fee within this day"
+        tests:
+          - not_null   
+      - name: LIQUIDITY_FEES_USD
+        description: "The summarized liquidity cost fee within this day in USD"
+        tests:
+          - not_null  
+      - name: BLOCK_REWARDS
+        description: "The summarized total block rewards within this day"
+        tests:
+          - not_null  
+      - name: BLOCK_REWARDS_USD
+        description: "The summarized total block rewards within this day in USD"
+        tests:
+          - not_null  
+      - name: TOTAL_EARNINGS
+        description: "The summarized total earnings within this day"
+        tests:
+          - not_null  
+      - name: TOTAL_EARNINGS_USD
+        description: "The summarized total earnings within this day in USD"
+        tests:
+          - not_null  
+      - name: EARNINGS_TO_NODES
+        description: "The summarized bonding earnings within this day"
+        tests:
+          - not_null  
+      - name: EARNINGS_TO_NODES_USD
+        description: "The summarized bonding earnings within this day in USD"
+        tests:
+          - not_null 
+      - name: EARNINGS_TO_POOLS
+        description: "The summarized liquidity earnings fee within this day"
+        tests:
+          - not_null  
+      - name: EARNINGS_TO_POOLS_USD
+        description: "The summarized liquidity earnings fee within this day in USD"
+        tests:
+          - not_null  
+      - name: AVG_NODE_COUNT
+        description: "The summarized average node operators number within this day"
+      - name: INSERTED_TIMESTAMP
+        description: '{{ doc("inserted_timestamp") }}'   
+      - name: MODIFIED_TIMESTAMP
+        description: '{{ doc("modified_timestamp") }}'  
+    tests:
+      - dbt_constraints.primary_key:
+          column_name: FACT_DAILY_EARNINGS_ID
+
+

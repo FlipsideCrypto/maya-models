@@ -1,0 +1,24 @@
+version: 2
+models:
+  - name: silver__update_node_account_status_events
+    data_tests:
+      - dbt_utils.unique_combination_of_columns:
+          combination_of_columns:
+            - NODE_ADDRESS
+            - CURRENT_STATUS
+            - FORMER_STATUS
+            - BLOCK_TIMESTAMP
+            - EVENT_ID
+    columns:
+      - name: NODE_ADDRESS
+        data_tests:
+          - not_null
+      - name: CURRENT_STATUS
+        data_tests:
+          - not_null
+      - name: FORMER_STATUS
+        data_tests:
+          - not_null
+      - name: BLOCK_TIMESTAMP
+        data_tests:
+          - not_null

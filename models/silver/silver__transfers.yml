@@ -1,0 +1,25 @@
+version: 2
+models:
+  - name: silver__transfers
+
+    columns:
+      - name: BLOCK_TIMESTAMP
+        data_tests:
+          - not_null
+      - name: BLOCK_ID
+        data_tests:
+          - not_null
+      - name: ASSET
+      - name: FROM_ADDRESS
+        data_tests:
+          - not_null
+      - name: TO_ADDRESS
+        data_tests:
+          - not_null
+      - name: cacao_AMOUNT
+        data_tests:
+          - not_null
+      - name: cacao_AMOUNT_USD
+        data_tests:
+          - not_null:
+              where: BLOCK_TIMESTAMP <= SYSDATE() - interval '2 day' 

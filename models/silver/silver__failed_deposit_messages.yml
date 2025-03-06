@@ -1,0 +1,29 @@
+version: 2
+models:
+  - name: silver__failed_deposit_messages
+    data_tests:
+      - dbt_utils.unique_combination_of_columns:
+          combination_of_columns:
+            - EVENT_ID
+    columns:
+      - name: AMOUNT_E8
+        data_tests:
+          - not_null
+      - name: ASSET
+        data_tests:
+          - not_null
+      - name: FROM_ADDRESS
+        data_tests:
+          - not_null
+      - name: MEMO
+      - name: CODE
+      - name: REASON
+      - name: TX_ID
+        data_tests:
+          - not_null
+      - name: EVENT_ID
+        data_tests:
+          - not_null
+      - name: BLOCK_TIMESTAMP
+        data_tests:
+          - not_null

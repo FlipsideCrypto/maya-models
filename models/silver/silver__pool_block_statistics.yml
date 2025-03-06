@@ -1,0 +1,125 @@
+version: 2
+models:
+  - name: silver__pool_block_statistics
+    data_tests:
+      - dbt_utils.unique_combination_of_columns:
+          combination_of_columns:
+            - DAY
+            - ASSET
+    columns:
+      - name: DAY
+        data_tests:
+          - not_null
+          - dbt_expectations.expect_row_values_to_have_recent_data:
+              datepart: day
+              interval: 2
+      - name: ADD_ASSET_LIQUIDITY_VOLUME
+        data_tests:
+          - not_null
+      - name: ADD_LIQUIDITY_COUNT
+        data_tests:
+          - not_null
+      - name: ADD_LIQUIDITY_VOLUME
+        data_tests:
+          - not_null
+      - name: ADD_cacao_LIQUIDITY_VOLUME
+        data_tests:
+          - not_null
+      - name: ASSET
+        data_tests:
+          - not_null
+      - name: ASSET_DEPTH
+        data_tests:
+          - not_null
+      - name: ASSET_PRICE
+        data_tests:
+          - not_null
+      - name: ASSET_PRICE_USD
+        data_tests:
+          - not_null
+      - name: AVERAGE_SLIP
+        data_tests:
+          - not_null
+      - name: IMPERMANENT_LOSS_PROTECTION_PAID
+        data_tests:
+          - not_null
+      - name: cacao_DEPTH
+        data_tests:
+          - not_null
+      - name: STATUS
+        data_tests:
+          - not_null
+      - name: SWAP_COUNT
+        data_tests:
+          - not_null
+      - name: SWAP_VOLUME
+        data_tests:
+          - not_null
+      - name: TO_ASSET_AVERAGE_SLIP
+        data_tests:
+          - not_null
+      - name: TO_ASSET_COUNT
+        data_tests:
+          - not_null
+      - name: TO_ASSET_FEES
+        data_tests:
+          - not_null
+      - name: TO_ASSET_VOLUME
+        data_tests:
+          - not_null
+      - name: TO_cacao_AVERAGE_SLIP
+        data_tests:
+          - not_null
+      - name: TO_cacao_COUNT
+        data_tests:
+          - not_null
+      - name: TO_cacao_FEES
+        data_tests:
+          - not_null
+      - name: TO_cacao_VOLUME
+        data_tests:
+          - not_null
+      - name: TOTALFEES
+        data_tests:
+          - not_null
+      - name: UNIQUE_MEMBER_COUNT
+        data_tests:
+          - not_null
+      - name: UNIQUE_SWAPPER_COUNT
+        data_tests:
+          - not_null
+      - name: UNITS
+        data_tests:
+          - not_null
+      - name: WITHDRAW_ASSET_VOLUME
+        data_tests:
+          - not_null
+      - name: WITHDRAW_COUNT
+        data_tests:
+          - not_null
+      - name: WITHDRAW_cacao_VOLUME
+        data_tests:
+          - not_null
+      - name: WITHDRAW_VOLUME
+        data_tests:
+          - not_null
+      - name: TOTAL_STAKE
+        data_tests:
+          - not_null
+      - name: DEPTH_PRODUCT
+        data_tests:
+          - not_null
+      - name: SYNTH_UNITS
+        data_tests:
+          - not_null
+      - name: POOL_UNITS
+        data_tests:
+          - not_null
+      - name: LIQUIDITY_UNIT_VALUE_INDEX
+        data_tests:
+          - not_null
+      - name: PREV_LIQUIDITY_UNIT_VALUE_INDEX
+        data_tests:
+          - not_null:
+              where: day <= '2021-04-10'
+

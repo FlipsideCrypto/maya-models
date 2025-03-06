@@ -1,0 +1,57 @@
+version: 2
+
+sources:
+  - name: maya_midgard
+    database: HEVO
+    schema: MAYA_MIDGARD_2
+    tables:
+      - name: midgard_active_vault_events
+      - name: midgard_add_events
+      - name: midgard_block_log
+      - name: midgard_block_pool_depths
+      - name: midgard_bond_events
+      - name: midgard_cacao_price
+      - name: midgard_constants
+      - name: midgard_failed_deposit_messages
+      - name: midgard_fee_events
+      - name: midgard_gas_events
+      - name: midgard_inactive_vault_events
+      - name: midgard_mayaname_change_events
+      - name: midgard_new_node_events
+      - name: midgard_outbound_events
+      - name: midgard_pending_liquidity_events
+      - name: midgard_pool_balance_change_events
+      - name: midgard_pool_events
+      - name: midgard_refund_events
+      - name: midgard_reserve_events
+      - name: midgard_rewards_events
+      - name: midgard_rewards_event_entries
+      - name: midgard_send_messages
+      - name: midgard_set_ip_address_events
+      - name: midgard_set_mimir_events
+      - name: midgard_set_node_keys_events
+      - name: midgard_set_node_mimir_events
+      - name: midgard_set_version_events
+      - name: midgard_slash_events
+      - name: midgard_slash_liquidity_events
+      - name: midgard_slash_points_events
+      - name: midgard_stake_events
+      - name: midgard_streaming_swap_details_events
+      - name: midgard_swap_events
+      - name: midgard_transfer_events
+      - name: midgard_update_node_account_status_events
+      - name: midgard_validator_request_leave_events
+      - name: midgard_withdraw_events
+  - name: crosschain
+    database: "{{ 'crosschain' if target.database == 'MAYA' else 'crosschain_dev' }}"
+    schema: core
+    tables:
+      - name: address_tags
+      - name: dim_dates
+  - name: crosschain_silver
+    database: "{{ 'crosschain' if target.database == 'MAYA' else 'crosschain_dev' }}"
+    schema: silver
+    tables:
+      - name: number_sequence
+      - name: complete_native_prices
+      - name: labels_combined

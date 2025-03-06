@@ -1,0 +1,56 @@
+version: 2
+models:
+  - name: defi__fact_pool_block_balances
+    description: "Fact table containing the actions the liquidity providers do in the THORChain, with the amount in cacao/Asset"
+    columns:
+      - name: FACT_POOL_BLOCK_BALANCES_ID
+        description: "{{ doc('sk') }}"
+        tests:
+          - dbt_expectations.expect_column_to_exist
+          - unique
+      - name: BLOCK_TIMESTAMP
+        description: "{{ doc('block_timestamp') }}"
+        tests:
+          - not_null:
+              where: DIM_BLOCK_ID not in ('-1','-2')
+      - name: DIM_BLOCK_ID
+        description: "FK to DIM_BLOCK table"
+        tests:
+          - negative_one:
+              where: _inserted_timestamp <  (CURRENT_TIMESTAMP - INTERVAL '8 HOURS')
+      - name: POOL_NAME
+        description: "{{ doc('pool_name') }}"
+        tests:
+          - not_null 
+      - name: cacao_AMOUNT
+        description: "The cacao amount balance for this pool name"
+        tests:
+          - not_null
+      - name: cacao_AMOUNT_USD
+        description: "The cacao amount balance in USD for this pool name"
+        tests:
+          - not_null
+      - name: ASSET_AMOUNT
+        description: "The asset amount balance for this pool name"
+        tests:
+          - not_null
+      - name: ASSET_AMOUNT_USD
+        description: "The asset amount balance in USD for this pool name"
+      - name: SYNTH_AMOUNT
+        description: "The synth amount balance for this pool name"
+        tests:
+          - not_null
+      - name: SYNTH_AMOUNT_USD
+        description: "The synth amount balance in USD for this pool name"
+      - name: INSERTED_TIMESTAMP
+        description: '{{ doc("inserted_timestamp") }}'   
+      - name: MODIFIED_TIMESTAMP
+        description: '{{ doc("modified_timestamp") }}'  
+    tests:
+      - dbt_constraints.primary_key:
+          column_name: FACT_POOL_BLOCK_BALANCES_ID
+      - dbt_constraints.foreign_key:
+          fk_column_name: DIM_BLOCK_ID
+          pk_table_name: ref('core__dim_block')
+          pk_column_name: DIM_BLOCK_ID
+

@@ -1,0 +1,51 @@
+version: 2
+models:
+  - name: defi__fact_failed_deposit_messages
+    description: "Fact table containing failed deposit messages"
+    columns:
+      - name: FACT_FAILED_DEPOSIT_MESSAGES_ID
+        description: "{{ doc('sk') }}"
+        tests:
+          - not_null
+          - unique
+      - name: BLOCK_TIMESTAMP
+        description: "{{ doc('block_timestamp') }}"
+        tests:
+          - not_null:
+              where: DIM_BLOCK_ID not in ('-1','-2')
+      - name: DIM_BLOCK_ID
+        description: "{{ doc('sk') }}"
+        tests:
+          - negative_one:
+              where: _inserted_timestamp <  (CURRENT_TIMESTAMP - INTERVAL '8 HOURS')
+      - name: AMOUNT_E8
+        description: "The amount of the failed deposit in E8 notation"
+        tests:
+          - not_null
+      - name: ASSET
+        description: "{{ doc('asset') }}"
+        tests:
+          - not_null
+      - name: FROM_ADDRESS
+        description: "{{ doc('from_address') }}"
+      - name: MEMO
+        description: "{{ doc('memo') }}"
+      - name: CODE
+        description: "Error code associated with the failed deposit"
+      - name: REASON
+        description: "Detailed reason for the failed deposit"
+      - name: TX_ID
+        description: "{{ doc('tx_id') }}"
+      - name: EVENT_ID
+        description: "Unique identifier for the failed deposit event"
+      - name: INSERTED_TIMESTAMP
+        description: '{{ doc("inserted_timestamp") }}'   
+      - name: MODIFIED_TIMESTAMP
+        description: '{{ doc("modified_timestamp") }}'  
+    tests:
+      - dbt_constraints.primary_key:
+          column_name: FACT_FAILED_DEPOSIT_MESSAGES_ID
+      - dbt_constraints.foreign_key:
+          fk_column_name: DIM_BLOCK_ID
+          pk_table_name: ref('core__dim_block')
+          pk_column_name: DIM_BLOCK_ID

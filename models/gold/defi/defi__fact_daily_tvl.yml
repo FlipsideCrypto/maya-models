@@ -1,0 +1,33 @@
+version: 2
+models:
+  - name: defi__fact_daily_tvl
+    description: "Fact table that shows the total valued locked and the total value bonded/pooled"
+    columns:
+      - name: FACT_DAILY_TVL_ID
+        description: "{{ doc('sk') }}"
+        tests:
+          - dbt_expectations.expect_column_to_exist
+          - unique
+      - name: DAY
+        description: "{{ doc('tx_id') }}"
+        tests:
+          - not_null
+      - name: TOTAL_VALUE_POOLED
+        description: "The total amount of cacao provided by the liquidity provides and pooled in the pool"
+      - name: TOTAL_VALUE_POOLED_USD
+        description: "The total USD amount of cacao provided by the liquidity provides and pooled in the pool"
+      - name: TOTAL_VALUE_BONDED
+        description: "The total amount of cacao provided by the node operators and bonded in the pool"
+      - name: TOTAL_VALUE_BONDED_USD
+        description: "The total USD amount of cacao provided by the node operators and bonded in the pool"
+      - name: TOTAL_VALUE_LOCKED
+        description: "The total cacao value locked in the pool"
+      - name: TOTAL_VALUE_LOCKED_USD
+        description: "The total USD value locked in the pool"
+      - name: INSERTED_TIMESTAMP
+        description: '{{ doc("inserted_timestamp") }}'   
+      - name: MODIFIED_TIMESTAMP
+        description: '{{ doc("modified_timestamp") }}'  
+    tests:
+      - dbt_constraints.primary_key:
+          column_name: FACT_DAILY_TVL_ID

@@ -1,0 +1,37 @@
+version: 2
+models:
+  - name: defi__fact_send_messages
+    description: "Fact table that shows send messages"
+    columns:
+      - name: FACT_SEND_MESSAGES_ID
+        description: "{{ doc('sk') }}"
+        tests:
+          - not_null
+      - name: BLOCK_TIMESTAMP
+        description: "{{ doc('block_timestamp') }}"
+        tests:
+          - not_null:
+              where: DIM_BLOCK_ID not in ('-1','-2')
+      - name: DIM_BLOCK_ID
+        description: "FK to DIM_BLOCK table"
+        tests:
+          - negative_one:
+              where: _inserted_timestamp <  (CURRENT_TIMESTAMP - INTERVAL '8 HOURS')
+      - name: AMOUNT_E8
+      - name: ASSET
+      - name: FROM_ADDRESS
+      - name: TO_ADDRESS
+      - name: MEMO
+      - name: TX_ID
+      - name: EVENT_ID
+      - name: INSERTED_TIMESTAMP
+        description: '{{ doc("inserted_timestamp") }}'   
+      - name: MODIFIED_TIMESTAMP
+        description: '{{ doc("modified_timestamp") }}'  
+    tests:
+      - dbt_constraints.primary_key:
+          column_name: FACT_SEND_MESSAGES_ID
+      - dbt_constraints.foreign_key:
+          fk_column_name: DIM_BLOCK_ID
+          pk_table_name: ref('core__dim_block')
+          pk_column_name: DIM_BLOCK_ID

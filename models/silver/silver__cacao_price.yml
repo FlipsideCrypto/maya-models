@@ -1,0 +1,10 @@
+version: 2
+models:
+  - name: silver__cacao_price
+    columns:
+      - name: CACAO_PRICE_E8
+        data_tests:
+          - not_null
+      - name: BLOCK_TIMESTAMP
+        data_tests:
+          - not_null

@@ -1,0 +1,72 @@
+version: 2
+models:
+  - name: silver__swap_events
+    data_tests:
+      - dbt_utils.unique_combination_of_columns:
+          combination_of_columns:
+            - TX_ID
+            - BLOCKCHAIN
+            - FROM_ADDRESS
+            - TO_ADDRESS
+            - FROM_ASSET
+            - FROM_E8
+            - TO_ASSET
+            - TO_E8
+            - MEMO
+            - POOL_NAME
+            - TO_E8_MIN
+            - SWAP_SLIP_BP
+            - LIQ_FEE_E8
+            - LIQ_FEE_IN_CACAO_E8
+            - _DIRECTION
+            - BLOCK_TIMESTAMP
+            - EVENT_ID
+    columns:
+      - name: TX_ID
+        data_tests:
+          - not_null
+      - name: BLOCKCHAIN
+        data_tests:
+          - not_null
+      - name: FROM_ADDRESS
+        data_tests:
+          - not_null
+      - name: TO_ADDRESS
+        data_tests:
+          - not_null
+      - name: FROM_ASSET
+        data_tests:
+          - not_null
+      - name: FROM_E8
+        data_tests:
+          - not_null
+      - name: TO_ASSET
+        data_tests:
+          - not_null
+      - name: TO_E8
+        data_tests:
+          - not_null
+      - name: MEMO
+        data_tests:
+          - not_null
+      - name: POOL_NAME
+        data_tests:
+          - not_null
+      - name: TO_E8_MIN
+        data_tests:
+          - not_null
+      - name: SWAP_SLIP_BP
+        data_tests:
+          - not_null
+      - name: LIQ_FEE_E8
+        data_tests:
+          - not_null
+      - name: LIQ_FEE_IN_CACAO_E8
+        data_tests:
+          - not_null
+      - name: _DIRECTION
+        data_tests:
+          - not_null
+      - name: BLOCK_TIMESTAMP
+        data_tests:
+          - not_null

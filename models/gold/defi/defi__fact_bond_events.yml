@@ -1,0 +1,71 @@
+version: 2
+models:
+  - name: defi__fact_bond_events
+    description: "Fact table containing all the information about the bond activities. THORChain uses a spinoff of the Proof of Stake consensus mechanism called Proof of Bond."
+    columns:
+      - name: FACT_BOND_EVENTS_ID
+        description: "{{ doc('sk') }}"
+        tests:
+          - dbt_expectations.expect_column_to_exist
+          - unique
+      - name: BLOCK_TIMESTAMP
+        description: "{{ doc('block_timestamp') }}"
+        tests:
+          - not_null:
+              where: DIM_BLOCK_ID not in ('-1','-2')
+          - dbt_expectations.expect_row_values_to_have_recent_data:
+              datepart: day
+              interval: 4
+      - name: DIM_BLOCK_ID
+        description: "FK to DIM_BLOCK table"
+        tests:
+          - negative_one:
+              where: _inserted_timestamp <  (CURRENT_TIMESTAMP - INTERVAL '8 HOURS')
+      - name: TX_ID
+        description: "{{ doc('tx_id') }}"
+        tests:
+          - not_null
+      - name: BLOCKCHAIN
+        description: "{{ doc('blockchain') }}"
+        tests:
+          - not_null:
+              where: tx_id <> '0000000000000000000000000000000000000000000000000000000000000000'
+      - name: FROM_ADDRESS
+        description: "{{ doc('from_address') }}"
+        tests:
+          - not_null:
+              where: tx_id <> '0000000000000000000000000000000000000000000000000000000000000000'
+      - name: TO_ADDRESS
+        description: "{{ doc('to_address') }}"
+        tests:
+          - not_null
+      - name: ASSET
+        description: "Same as pool name, which pool this bond events happens"
+      - name: ASSET_E8
+        description: "The asset amount for this bond, using the price table we can calculate the cacao amount by asset amount"
+        tests:
+          - not_null
+      - name: MEMO
+        description: "{{ doc('memo') }}"
+        tests:
+          - not_null:
+              where: tx_id <> '0000000000000000000000000000000000000000000000000000000000000000'
+      - name: bond_type
+        description: "{{ doc('bond_type') }}"
+        tests:
+          - not_null
+      - name: E8
+        description: "The cacao amount for this bond event"
+        tests:
+          - not_null   
+      - name: INSERTED_TIMESTAMP
+        description: '{{ doc("inserted_timestamp") }}'   
+      - name: MODIFIED_TIMESTAMP
+        description: '{{ doc("modified_timestamp") }}'  
+    tests:
+      - dbt_constraints.primary_key:
+          column_name: FACT_BOND_EVENTS_ID
+      - dbt_constraints.foreign_key:
+          fk_column_name: DIM_BLOCK_ID
+          pk_table_name: ref('core__dim_block')
+          pk_column_name: DIM_BLOCK_ID

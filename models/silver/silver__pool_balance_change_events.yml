@@ -1,0 +1,26 @@
+version: 2
+models:
+  - name: silver__pool_balance_change_events
+    columns:
+      - name: BLOCK_TIMESTAMP
+        data_tests:
+          - not_null
+      - name: ASSET
+        data_tests:
+          - not_null
+      - name: CACAO_AMOUNT
+        data_tests:
+          - not_null
+      - name: CACAO_ADD
+        data_tests:
+          - not_null
+      - name: ASSET_AMOUNT
+        data_tests:
+          - not_null
+      - name: ASSET_ADD
+        data_tests:
+          - not_null
+      - name: REASON
+        data_tests:
+          - not_null
+

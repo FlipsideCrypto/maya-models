@@ -1,0 +1,26 @@
+version: 2
+models:
+  - name: silver__total_block_rewards
+    data_tests:
+      - dbt_utils.unique_combination_of_columns:
+          combination_of_columns:
+            - BLOCK_ID
+            - REWARD_ENTITY
+    columns:
+      - name: BLOCK_TIMESTAMP
+        data_tests:
+          - not_null
+          - dbt_expectations.expect_row_values_to_have_recent_data:
+              datepart: day
+              interval: 1
+      - name: BLOCK_ID
+        data_tests:
+          - not_null
+      - name: REWARD_ENTITY
+        data_tests:
+          - not_null
+      - name: cacao_AMOUNT
+        data_tests:
+          - not_null
+      - name: cacao_AMOUNT_USD
+  

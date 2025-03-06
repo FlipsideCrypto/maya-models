@@ -1,0 +1,20 @@
+version: 2
+models:
+  - name: silver__block_log
+    data_tests:
+      - dbt_utils.unique_combination_of_columns:
+          combination_of_columns:
+            - HEIGHT
+            - TIMESTAMP
+            - HASH
+            - AGG_STATE
+    columns:
+      - name: TIMESTAMP
+        data_tests:
+          - not_null
+      - name: HEIGHT
+        data_tests:
+          - not_null
+      - name: HASH
+        data_tests:
+          - not_null

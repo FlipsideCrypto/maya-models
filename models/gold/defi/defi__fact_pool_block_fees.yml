@@ -1,0 +1,33 @@
+version: 2
+models:
+  - name: defi__fact_pool_block_fees
+    description: "Fact table that shows the fee paid by each pool at different timestamp"
+    columns:
+      - name: FACT_POOL_BLOCK_FEES_ID
+        description: "{{ doc('sk') }}"
+        tests:
+          - dbt_expectations.expect_column_to_exist
+          - unique
+      - name: DAY
+        description: "{{ doc('tx_id') }}"
+        tests:
+          - not_null
+      - name: POOL_NAME
+        description: "{{ doc('pool_name') }}"
+      - name: REWARDS
+        description: "The total rewards"
+      - name: TOTAL_LIQUIDITY_FEES_cacao
+        description: "The total liquidity fees paid in cacao"  
+      - name: ASSET_LIQUIDITY_FEES
+        description: "The liquidity fees paid in Asset"  
+      - name: cacao_LIQUIDITY_FEES
+        description: "The liquidity fees paid in cacao"
+      - name: EARNINGS
+        description: "The total earnings for this pool at this time"
+      - name: INSERTED_TIMESTAMP
+        description: '{{ doc("inserted_timestamp") }}'   
+      - name: MODIFIED_TIMESTAMP
+        description: '{{ doc("modified_timestamp") }}'  
+    tests:
+      - dbt_constraints.primary_key:
+          column_name: FACT_POOL_BLOCK_FEES_ID

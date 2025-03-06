@@ -1,0 +1,62 @@
+version: 2
+models:
+  - name: defi__fact_streamling_swap_details_events
+    description: "Fact table that shows the streaming swap event transactions"
+    columns:
+      - name: FACT_STREAMLING_SWAP_DETAILS_EVENTS_ID
+        description: "{{ doc('sk') }}"
+        tests:
+          - dbt_expectations.expect_column_to_exist
+          - unique
+      - name: BLOCK_TIMESTAMP
+        description: "{{ doc('block_timestamp') }}"
+        tests:
+          - not_null:
+              where: DIM_BLOCK_ID not in ('-1','-2')
+      - name: DIM_BLOCK_ID
+        description: "FK to DIM_BLOCK table"
+        tests:
+          - negative_one:
+              where: _inserted_timestamp <  (CURRENT_TIMESTAMP - INTERVAL '8 HOURS')
+      - name: TX_ID
+        description: "{{ doc('tx_id') }}"
+      - name: INTERVAL
+        description: "the time interval of the swap"
+      - name: quantity
+        description: "the quantity of the swap"
+      - name:  COUNT
+        description: "the count of the swap"
+      - name: last_height
+        description: "the last height of the swap"
+      - name: deposit_asset
+        description: "the deposit asset of the swap"
+      - name: deposit_e8
+        description: "the deposit amount of the swap"
+      - name: in_asset
+        description: "the in asset of the swap"
+      - name: in_e8
+        description: "the in amount of the swap"
+      - name: out_asset
+        description: "the out asset of the swap"
+      - name: out_e8
+        description: "the out amount of the swap"
+      - name: failed_swaps
+        description: "the count of failed swaps"
+      - name: failed_swaps_reasons
+        description: "DEPRECATING SOON! the reason of failed swaps"
+      - name: event_id
+        description: ""
+      - name: failed_swap_reasons
+        description: "the reason of failed swaps"
+      - name: INSERTED_TIMESTAMP
+        description: '{{ doc("inserted_timestamp") }}'   
+      - name: MODIFIED_TIMESTAMP
+        description: '{{ doc("modified_timestamp") }}'  
+    tests:
+      - dbt_constraints.primary_key:
+          column_name: FACT_STREAMLING_SWAP_DETAILS_EVENTS_ID
+      - dbt_constraints.foreign_key:
+          fk_column_name: DIM_BLOCK_ID
+          pk_table_name: ref('core__dim_block')
+          pk_column_name: DIM_BLOCK_ID
+
