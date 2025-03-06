@@ -3,7 +3,7 @@ version: 2
 sources:
   - name: maya_midgard
     database: HEVO
-    schema: MAYA_MIDGARD
+    schema: MAYA_MIDGARD_2
     tables:
       - name: midgard_active_vault_events
       - name: midgard_add_events
