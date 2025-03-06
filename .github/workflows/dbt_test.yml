@@ -39,4 +39,4 @@ jobs:
           dbt deps
       - name: Run DBT Jobs
         run: |
-          dbt test -m "maya_models,models/bronze"  "thorchamaya_modelsin_models,models/silver" "maya_models,models/gold"
+          dbt test -m "maya_models,models/bronze"  "maya_models,models/silver" "maya_models,models/gold"
