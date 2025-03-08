@@ -42,5 +42,5 @@ jobs:
           dbt deps
       - name: Run DBT Jobs
         run: |
-          dbt run -s "maya_models,tag:scheduled_core"
+          dbt run -m "maya_models,./models"
           
